@@ -3,6 +3,9 @@ const app = express();
 const port = 3000;
 const tasksRoutes = require("./routes/tasks.routes");
 
+// Middlewares
+app.use(express.json());
+
 // Routes
 app.get("/", (req, res) => {
   res.send("Hello World!");
