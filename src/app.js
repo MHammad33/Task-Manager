@@ -4,11 +4,18 @@ const connectDb = require("./db/connectDb");
 const express = require("express");
 const app = express();
 const port = 3000;
+const tasksRoutes = require("./routes/tasks.routes");
+
+// Middlewares
+app.use(express.json());
 
 // Routes
 app.get("/", (req, res) => {
   res.send("Hello World!");
 })
+
+// Tasks routes
+app.use("/api/v1/tasks", tasksRoutes);
 
 // app.get("/api/v1/tasks")         -- get all the tasks
 // app.post("/api/v1/tasks")        -- create a new task
