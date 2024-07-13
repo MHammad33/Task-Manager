@@ -10,10 +10,7 @@ const tasksRoutes = require("./routes/tasks.routes");
 app.use(express.json());
 app.use(express.static("./public"));
 
-// Routes
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-})
+// * Routes
 
 // Tasks routes
 app.use("/api/v1/tasks", tasksRoutes);
