@@ -35,6 +35,12 @@ const getTask = async (req, res) => {
 
     const { id } = req.params;
     const task = await Task.findById(id);
+
+    // Check if task exists
+    if (!task) {
+      return res.status(404).json({ msg: `No task with id: ${id}` });
+    }
+
     res.json({ task });
   } catch (err) {
     res.status(500).json({ msg: err.message });
