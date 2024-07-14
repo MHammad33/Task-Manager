@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 const tasksRoutes = require("./routes/tasks.routes");
 const notFound = require("./middleware/not-found");
+const errorHandlerMiddleware = require("./middleware/error-handler.middleware");
 
 // Middlewares
 app.use(express.json());
@@ -18,6 +19,9 @@ app.use("/api/v1/tasks", tasksRoutes);
 
 // Not Found Routes
 app.use("*", notFound);
+
+// Error Handler Middleware
+app.use(errorHandlerMiddleware);
 
 // app.get("/api/v1/tasks")         -- get all the tasks
 // app.post("/api/v1/tasks")        -- create a new task

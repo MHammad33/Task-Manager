@@ -19,7 +19,11 @@ const getAllTasks = asyncHandler(async (req, res) => {
  * @returns New task
  */
 const createTask = asyncHandler(async (req, res) => {
+  console.log("createTask");
+  console.log("Request Body:", req.body);
+
   const task = await Task.create(req.body);
+  console.log("Created Successfully");
   res.status(201).json({ task });
 })
 
