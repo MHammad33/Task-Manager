@@ -1,5 +1,6 @@
 const Task = require("../models/Task.model");
 const asyncHandler = require("../middleware/async.middleware");
+const { createCustomError } = require("../errors/error");
 
 /**
  * @param {*} req 
@@ -33,13 +34,16 @@ const createTask = asyncHandler(async (req, res) => {
  * @param {*} res 
  * @returns Task by id
  */
-const getTask = asyncHandler(async (req, res) => {
+const getTask = asyncHandler(async (req, res, next) => {
+  console.log("getTask");
   const { id } = req.params;
+
   const task = await Task.findById(id);
+
 
   // Check if task exists
   if (!task) {
-    return res.status(404).json({ msg: `No task with id: ${id}` });
+    return next(createCustomError(`No task with id: ${id}`, 404));
   }
 
   res.json({ task });
@@ -52,7 +56,7 @@ const getTask = asyncHandler(async (req, res) => {
  * @param {*} res 
  * @returns Updated task
  */
-const updateTask = asyncHandler(async (req, res) => {
+const updateTask = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
 
   const task = await Task.findByIdAndUpdate(id, req.body, {
@@ -62,7 +66,7 @@ const updateTask = asyncHandler(async (req, res) => {
 
   // Check if task exists
   if (!task) {
-    return res.status(404).json({ msg: `No task with id: ${id}` });
+    return next(createCustomError(`No task with id: ${id}`, 404));
   }
 
   res.status(200).json({ task });
@@ -75,14 +79,14 @@ const updateTask = asyncHandler(async (req, res) => {
  * @param {*} res 
  * @returns Deleted task
  */
-const deleteTask = asyncHandler((async (req, res) => {
+const deleteTask = asyncHandler((async (req, res, next) => {
   const { id } = req.params;
 
   const deletedTask = await Task.findByIdAndDelete(id);
 
   // Check if task exists
   if (!deletedTask) {
-    return res.status(404).json({ msg: `No task with id: ${id}` });
+    return next(createCustomError(`No task with id: ${id}`, 404));
   }
 
   res.status(200).json({ task: deletedTask });
