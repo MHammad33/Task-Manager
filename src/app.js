@@ -3,7 +3,7 @@ const connectDb = require("./db/connectDb");
 
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const tasksRoutes = require("./routes/tasks.routes");
 const notFound = require("./middleware/not-found");
 const errorHandlerMiddleware = require("./middleware/error-handler.middleware");
